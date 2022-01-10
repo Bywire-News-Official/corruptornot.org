@@ -111,6 +111,8 @@
 
             <p class="lead">Tony Blair's results are:</p>
 
+            <!--ONLY SHOW FROM HERE ONCE USER ENTERS EMAIL ADDRESS OR IS LOGGED IN - (ADD PASSWORD FUNCTIONALITY, BUT DO NOT USE FOR NOW, JUST EMAIL TO 'LOGIN')-->
+
             <p>Please subscribe to our newsletter to see results. <!-- Button trigger modal -->
               <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 How we use data/privacy</a>
@@ -121,13 +123,13 @@
             <form class="row g-1">
 
               <div class="col col-sm-12 col-md-4">
-                <label for="inputPassword2" class="visually-hidden">First name</label>
-                <input type="passwemailord" class="form-control" id="inputPassword2" placeholder="First name">
+                <label for="firstName" class="visually-hidden">First name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="First name">
               </div>
              
               <div class="col col-sm-12 col-md-4">
-                <label for="inputPassword2" class="visually-hidden">Email</label>
-                <input type="passwemailord" class="form-control" id="inputPassword2" placeholder="Valid email">
+                <label for="email" class="visually-hidden">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Valid email">
               </div>
               <div class="col col-sm-12 col-md-4">
                 <div class="d-grid">
@@ -166,7 +168,7 @@
   </div>
 </div>
 
-
+<!--END DISPLAY RESULTS AFTER EMAIL ENTERED-->
 
          
 
