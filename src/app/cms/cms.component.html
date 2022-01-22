@@ -1,0 +1,74 @@
+<h1 class="h1">Politician Inventory</h1>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between stretch" class="politicians">
+  <table mat-table fxFlex="100%" fxFlex.gt-sm="66%" [dataSource]="dataSource" class="mat-elevation-z1">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name</th>
+      <td mat-cell *matCellDef="let politician"> {{politician.name}}</td>
+    </ng-container>
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef> - </th>
+      <td mat-cell *matCellDef="let politician"></td>
+    </ng-container>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description</th>
+      <td mat-cell *matCellDef="let politician"> {{politician.description}}</td>
+    </ng-container>
+    <ng-container matColumnDef="votes">
+      <th mat-header-cell *matHeaderCellDef> Votes</th>
+      <td mat-cell *matCellDef="let politician"> {{politician.votes}}</td>
+    </ng-container>
+    <ng-container matColumnDef="corrupt">
+      <th mat-header-cell *matHeaderCellDef> Corrupt</th>
+      <td mat-cell *matCellDef="let politician"> {{politician.corrupt}}</td>
+    </ng-container>
+    <ng-container matColumnDef="not_corrupt">
+      <th mat-header-cell *matHeaderCellDef> Not Corrupt</th>
+      <td mat-cell *matCellDef="let politician"> {{politician.not_corrupt}}</td>
+    </ng-container>
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let politician">
+        <button mat-icon-button (click)="editPolitician(politician)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let politician">
+        <button mat-icon-button (click)="deletePolitician(politician)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-divider fxShow="false" fxShow.gt-sm [vertical]="true"></mat-divider>
+  <div>
+    <h2>Selected Politician</h2>
+    <label>Name
+      <input type="text" [(ngModel)]="selectedPolitician.name">
+    </label>
+    <label>Image URL
+      <input type="text" [(ngModel)]="selectedPolitician.image">
+    </label>
+    <label>Description
+      <input type="text" [(ngModel)]="selectedPolitician.description">
+    </label>
+    <label>Votes
+      <input type="text" [(ngModel)]="selectedPolitician.votes">
+    </label>
+    <label>Corrupt
+      <input type="text" [(ngModel)]="selectedPolitician.corrupt">
+    </label>
+    <label>Note Corrupt
+      <input type="text" [(ngModel)]="selectedPolitician.not_corrupt">
+    </label>
+    <button mat-flat-button color="primary" (click)="updatePolitician()">{{(selectedPolitician.id!==undefined)?'Update':'Create'}}</button>
+    <button mat-flat-button color="primary" (click)="clearPolitician()">Clear</button>
+  </div>
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

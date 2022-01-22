@@ -1,0 +1,75 @@
+        <section name="results">
+
+        <div class="row text-center mt-3">
+          <div class="col-12">
+
+            <p>Thank you for voting, we got it!</p>
+
+            <p class="lead">Tony Blair's results are:</p>
+
+            <!--ONLY SHOW FROM HERE ONCE USER ENTERS EMAIL ADDRESS OR IS LOGGED IN - (ADD PASSWORD FUNCTIONALITY, BUT DO NOT USE FOR NOW, JUST EMAIL TO 'LOGIN')-->
+
+            <p>Please subscribe to our newsletter to see results. <!-- Button trigger modal -->
+              <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                How we use data/privacy</a>
+              </p>
+
+
+
+            <form class="row g-1">
+
+              <div class="col col-sm-12 col-md-4">
+                <label for="firstName" class="visually-hidden">First name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="First name">
+              </div>
+             
+              <div class="col col-sm-12 col-md-4">
+                <label for="email" class="visually-hidden">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Valid email">
+              </div>
+              <div class="col col-sm-12 col-md-4">
+                <div class="d-grid">
+                <button type="submit" class="btn btn-primary mb-3">Confirm</button>
+                </div>
+              </div>
+            </form>
+            
+
+
+            <p class="lead"><strong>86%</strong> people think Tony Blair is <span id="hiddenScore">CORRUPT!</span><p>
+              <div class="p-1">
+
+                <canvas id="myChart"></canvas>
+
+              </div>
+
+
+          
+
+              <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">How do we use data?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>ENTER PRIVACY SUMMARY HERE</p>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+   
+    </div>
+  </div>
+</div>
+
+<!--END DISPLAY RESULTS AFTER EMAIL ENTERED-->
+
+         
+
+          </div>
+
+        </div>
+
+      </section>
