@@ -5,6 +5,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
+import { ActivatedRoute } from '@angular/router';
+
 
 const conf = new Config();
 const baseUrl = conf.serverBaseURL;
@@ -28,7 +30,7 @@ export class PoliticiansComponent implements OnInit {
   corrupt_percent = 0;
   not_corrupt_percent = 0;
   selected_percent = this.corrupt_percent;
-
+  politician_id: any = null;;
 
   view= [700, 400];
 
@@ -50,7 +52,7 @@ export class PoliticiansComponent implements OnInit {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, public dialog: MatDialog) { 
+  constructor(private http: HttpClient, private formBuilder: FormBuilder, public dialog: MatDialog, private route: ActivatedRoute) { 
       //Object.assign(this, { single });
       this.requiredForm = this.formBuilder.group({
       name: ['', Validators.required ]
@@ -92,10 +94,19 @@ export class PoliticiansComponent implements OnInit {
   async refresh() {
     const data = await this.getPoliticians();
     //console.dir(data)
+    if(this.route.snapshot.queryParamMap.get('id'))
+      this.politician_id = this.route.snapshot.queryParamMap.get('id');
+     console.log(this.politician_id);   
     this.politician = data.sort( () => Math.random() - 0.5);
     this.total_politicians = this.politician.length 
     this.politician_index = 0
-    this.first_politician = this.politician[this.politician_index]
+    if(this.politician_id == null){
+      this.first_politician = this.politician[this.politician_index];
+    }
+    else{
+      let obj = this.politician.find(o => o.id === Number.parseInt(this.politician_id , 10));
+      this.first_politician = obj!;
+    }
     this.chartData = [{ name: "Corrupt", value: this.first_politician.corrupt },
                       { name: "Not Corrupt", value: this.first_politician.not_corrupt}];
 
