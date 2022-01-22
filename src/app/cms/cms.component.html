@@ -3,7 +3,7 @@
   <table mat-table fxFlex="100%" fxFlex.gt-sm="66%" [dataSource]="dataSource" class="mat-elevation-z1">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name</th>
-      <td mat-cell *matCellDef="let politician"> {{politician.name}}</td>
+      <td mat-cell *matCellDef="let politician"><a href='?id={{politician.id}}'> {{politician.name}}</a></td>
     </ng-container>
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef> - </th>
