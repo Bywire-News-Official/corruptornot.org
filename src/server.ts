@@ -8,6 +8,7 @@ const app = express()
   .use(bodyParser.json())
   .use(politicianRouter);
 
-app.listen(4201, () => {
-  return console.log('Node App listening on port 4201');
+const port = process.env.PORT || 4201;
+app.listen(port, () => {
+  return console.log('Node App listening on port ${port}');
 })
