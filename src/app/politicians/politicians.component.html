@@ -1,130 +1,108 @@
     <div class="container mt-10" id="target1">
         <div class="row text-center">
 
-            <div class="col-md-6 offset-md-3"> 
+            <div class="col-md-6 offset-md-3">
 
                 <div class="row">
-            <div class="col-12 p-4">
-              <h3>Corrupt or Not?</h3>
-                <h1>{{first_politician.name}}</h1>
-                <h3>{{first_politician.description}}</h3>
-            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-12 ">
-               <img src="{{first_politician.image}}" class="d-block mx-auto img-fluid">
-            </div>
-        </div>
-
-        <div class="row text-center mt-3">
-            <div class="col-6">
-                <div class="d-grid">
-                    <button class="btn btn-danger btn-lg" type="button" (click)="corrupt()">Corrupt</button>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="d-grid">
-                    <button class="btn btn-primary btn-lg" type="button" (click)="not_corrupt()">Not Corrupt</button>
-                </div>
-            </div>
-        </div>
-    <div class="container d-flex justify-content-center mt-200">
-        <div class="row">
-            <div class="col-md-12 p-3">
-               <h3><button class="btn btn-primary btn-lg" (click)="on_next()"><i class="fas fa-redo"></i> Vote Next</button></h3>
-            </div>
-        </div>
-    </div>
-
-        <section name="results">
-
-        <div class="row text-center mt-3">
-          <div class="col-12">
-
-            <p>{{message}}</p>
-
-            <p class="lead">{{first_politician.name}}'s results are:</p>
-
-            <div  [hidden]="hideSignInfo">
-
-                <!--ONLY SHOW FROM HERE ONCE USER ENTERS EMAIL ADDRESS OR IS LOGGED IN - (ADD PASSWORD FUNCTIONALITY, BUT DO NOT USE FOR NOW, JUST EMAIL TO 'LOGIN')-->
-
-                <p>Please subscribe to our newsletter to see results. <!-- Button trigger modal -->
-                  <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="showDialog()">
-                    How we use data/privacy</a>
-                  </p>
-
-
-
-                <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()"  class="row g-1" novalidate>
-
-                  <div class="col col-sm-12 col-md-4">
-                    <label for="name" class="visually-hidden">First name</label>
-                    <input type="text" class="form-control" id="name" placeholder="First name" formControlName="name" >
-                  </div>
-                 
-                  <div class="col col-sm-12 col-md-4">
-                    <label for="email" class="visually-hidden">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Valid email" formControlName="email" required>
-                  </div>
-                  <div class="col col-sm-12 col-md-4">
-                    <div class="d-grid">
-                    <button type="submit" class="btn btn-primary mb-3">Confirm</button>
+                    <div class="col-12 p-4">
+                        <h3>Corrupt or Not?</h3>
+                        <h1>{{currentPolitician.name}}</h1>
+                        <h3>{{currentPolitician.description}}</h3>
                     </div>
-                  </div>
-                </form>
-             </div>
-            
-            <div [hidden]="hideBasicInfo">
-                <p class="lead"><strong>{{this.selected_percent.toFixed()}}%</strong> people think {{first_politician.name}} is <span id="hiddenScore">{{result}}!</span><p>
-                  <div class="p-1">
+                </div>
+                <div class="row text-center">
+                    <div class="col-12 ">
+                        <img src="{{currentPolitician.image}}" class="d-block mx-auto img-fluid">
+                    </div>
+                </div>
 
-                    <ngx-charts-pie-chart 
-                        [results]="chartData"
-                        [legend]="true"
-                        [legendTitle]="first_politician.name" 
-                        [view]="[1000,800]"
-                        [labels]="true" 
-                        >
-                    </ngx-charts-pie-chart>                
+                <div class="row text-center mt-3">
+                    <div class="col-6">
+                        <div class="d-grid">
+                            <button class="btn btn-danger btn-lg" type="button" (click)="onVote(true)">Corrupt</button>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-lg" type="button" (click)="onVote(false)">Not Corrupt</button>
+                        </div>
+                    </div>
+                </div>
 
-                  </div>
+                <section name="results">
+
+                    <div class="row text-center mt-3">
+                        <div class="col-12">
+
+                            <p class="lead">{{message}}</p>
+                            <div [hidden]="hideLoginForm">
+
+
+
+                                <!--ONLY SHOW FROM HERE ONCE USER ENTERS EMAIL ADDRESS OR IS LOGGED IN - (ADD PASSWORD FUNCTIONALITY, BUT DO NOT USE FOR NOW, JUST EMAIL TO 'LOGIN')-->
+
+                                <p>
+                                    <!-- Button trigger modal -->
+                                    <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="showDialog()">
+                                    How we use data/privacy</a>
+                                </p>
+
+
+
+                                <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="row g-1" novalidate>
+                                    <div class="col col-sm-12 col-md-4">
+                                        <label for="name" class="visually-hidden">First name</label>
+                                        <input type="text" class="form-control" id="name" placeholder="First name" formControlName="name">
+                                    </div>
+
+                                    <div class="col col-sm-12 col-md-4">
+                                        <label for="email" class="visually-hidden">Email</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Valid email" formControlName="email" required>
+                                    </div>
+                                    <div class="col col-sm-12 col-md-4">
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary mb-3">
+                                                Confirm
+                                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div [hidden]="hideChartArea">
+                                <p class="lead">{{currentPolitician.name}}'s results are:</p>
+                                <p class="lead"><strong>{{this.selectedPercent.toFixed()}}%</strong> people think {{currentPolitician.name}} is <span id="hiddenScore">{{selectedResult}}!</span>
+                                    <p>
+                                        <div class="p-1">
+                                                  <canvas baseChart
+                                                          [data]="pieChartData"
+                                                          [type]="pieChartType"
+                                                          [options]="pieChartOptions"
+                                                          [plugins]="pieChartPlugins">
+                                                  </canvas>
+
+                                        </div>
+                                        <div class="container d-flex justify-content-center mt-200">
+                                            <div class="row">
+                                                <div class="col-md-12 p-3">
+                                                    <h3><button class="btn btn-primary btn-lg" (click)="onNext()"><i class="fas fa-redo"></i> Vote Next</button></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id='resultBox'></div>
+
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                    </div>
+
+                </div>
+
             </div>
-
-            <div id='resultBox'></div>
-          
-
-              <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">How do we use data?</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>ENTER PRIVACY SUMMARY HERE</p>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-      </div>
-   
-    </div>
-  </div>
-</div>
-
-<!--END DISPLAY RESULTS AFTER EMAIL ENTERED-->
-
-         
-
-          </div>
-
-        </div>
-
-      </section> 
-
-
-      </div>
-
-    </div>
-
-   </div>

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
+
+/*
+  display popup content
+*/
 @Component({
   selector: 'app-dialog-component',
   templateUrl: './dialog-component.component.html',

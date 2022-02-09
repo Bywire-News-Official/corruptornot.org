@@ -1,75 +1,56 @@
-        <section name="results">
-
-        <div class="row text-center mt-3">
-          <div class="col-12">
-
-            <p>Thank you for voting, we got it!</p>
-
-            <p class="lead">Tony Blair's results are:</p>
-
-            <!--ONLY SHOW FROM HERE ONCE USER ENTERS EMAIL ADDRESS OR IS LOGGED IN - (ADD PASSWORD FUNCTIONALITY, BUT DO NOT USE FOR NOW, JUST EMAIL TO 'LOGIN')-->
-
-            <p>Please subscribe to our newsletter to see results. <!-- Button trigger modal -->
-              <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                How we use data/privacy</a>
-              </p>
+    <div class="row mt-5">
 
 
+        <div class="col-md-6 offset-md-3">
 
-            <form class="row g-1">
+            <h2 class="py-2">The {{heading}} Corrupt...as voted by YOU is:</h2>
 
-              <div class="col col-sm-12 col-md-4">
-                <label for="firstName" class="visually-hidden">First name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="First name">
-              </div>
-             
-              <div class="col col-sm-12 col-md-4">
-                <label for="email" class="visually-hidden">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Valid email">
-              </div>
-              <div class="col col-sm-12 col-md-4">
-                <div class="d-grid">
-                <button type="submit" class="btn btn-primary mb-3">Confirm</button>
+            <br />
+            <div class="table-responsive">
+                <div class="mat-elevation-z8">
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+                    </mat-form-field>
+                    <mat-table [dataSource]="dataSource" matSort>
+
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="id">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                            <mat-cell *matCellDef="let row; let i = index"><a href='?id={{row.id}}'> #{{i + 1}}</a> </mat-cell>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> <a href='?id={{row.id}}'><img src="{{row.image}}" width="32" height="32" />{{row.name}}</a> </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="vote">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> vote </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.vote}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="score">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Score </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.score.toFixed()}}% </mat-cell>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="corrupt">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Corrupt </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.corrupt}} </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </mat-row>
+                    </mat-table>
+
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                 </div>
-              </div>
-            </form>
-            
-
-
-            <p class="lead"><strong>86%</strong> people think Tony Blair is <span id="hiddenScore">CORRUPT!</span><p>
-              <div class="p-1">
-
-                <canvas id="myChart"></canvas>
-
-              </div>
-
-
-          
-
-              <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">How do we use data?</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>ENTER PRIVACY SUMMARY HERE</p>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-      </div>
-   
-    </div>
-  </div>
-</div>
-
-<!--END DISPLAY RESULTS AFTER EMAIL ENTERED-->
-
-         
-
-          </div>
-
+                <div class="loading" *ngIf="loading">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
         </div>
-
-      </section>
+    </div>

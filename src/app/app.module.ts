@@ -2,13 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PoliciansComponent } from './policians/policians.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
-import { ResultMostComponent } from './result-most/result-most.component';
-import { ResultLeastComponent } from './result-least/result-least.component';
 import { ResultComponent } from './result/result.component';
 import { PoliticiansComponent } from './politicians/politicians.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,34 +20,47 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgChartsModule } from 'ng2-charts';
-import { PieChartComponent } from './pie-chart/pie-chart.component';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+ import { NgChartsModule } from 'ng2-charts';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
+import { LoginComponent } from './login/login.component';
+import { MatTableExporterModule } from 'mat-table-exporter';
+
+import { saBackendProvider } from './common/backend-interceptor';
+import { ErrorInterceptor } from './common/error-interceptor';
+import { AuthChecker } from './common/auth.checker';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PoliciansComponent,
     TopBarComponent,
-    ResultMostComponent,
-    ResultLeastComponent,
     ResultComponent,
     PoliticiansComponent,
     CmsComponent,
-    PieChartComponent,
-    DialogComponentComponent
+    DialogComponentComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgChartsModule,
     RouterModule.forRoot([
       { path: '', component: PoliticiansComponent },
-      { path: 'the-most', component: ResultMostComponent },
-      { path: 'the-least', component: ResultLeastComponent },
-      { path: 'admin', component: CmsComponent },
+      { path: 'the-most', component: ResultComponent },
+      { path: 'the-least', component: ResultComponent },
+      { path: 'admin', component: CmsComponent, canActivate: [AuthChecker]  },
+      { path: 'login', component: LoginComponent },
+      {path: 'result', component: ResultComponent},
+      { path: '**', redirectTo: '' }
     ]),
     BrowserAnimationsModule,
     FlexLayoutModule,
@@ -59,15 +69,17 @@ import { DialogComponentComponent } from './dialog-component/dialog-component.co
     MatIconModule,
     MatButtonModule,
     MatTableModule,
+    MatTableExporterModule,
     MatDividerModule,
     MatProgressSpinnerModule,
     FormsModule,
-    NgChartsModule,
-    NgxChartsModule,
     ReactiveFormsModule,
     MatDialogModule
   ],
-  providers: [],
+  providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        saBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
