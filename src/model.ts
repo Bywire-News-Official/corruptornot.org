@@ -1,4 +1,8 @@
-import {Entity, PrimaryGeneratedColumn, Column, createConnection, Connection, Repository} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, createConnection, Connection, Repository, ManyToOne, JoinColumn} from 'typeorm';
+
+/*
+contains database models
+*/
 
 @Entity()
 export class Politician {
@@ -11,32 +15,72 @@ export class Politician {
   @Column('text')
   description: string;
 
-  @Column()
+  @Column('text')
   image: string;
 
-  @Column()
-  votes: number;
+
+}
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
-  corrupt: number;
+  name: string;
+
+  @Column('text')
+  email: string;
 
   @Column()
-  not_corrupt: number;
+  ip: string;
+
+}
+@Entity()
+export class UserVotes {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @ManyToOne(() => User, { onDelete: 'CASCADE' }) 
+  @JoinColumn({ name: "userID" })
+  user: User;
+
+  @ManyToOne(() => Politician, { onDelete: 'CASCADE' }) 
+  @JoinColumn({ name: "politicianID" })
+  politician: Politician;
+
+  @Column()
+  isCorrupt: boolean;
+
+}
+@Entity()
+export class Admin {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  username: string;
+
+  @Column('text')
+  password: string;
 
 }
 
 let connection:Connection;
-
-export async function getPoliticianRepository(): Promise<Repository<Politician>> {
+export async function getRepository(entity:any): Promise<Repository<any>> {
   if (connection===undefined) {
-    connection = await createConnection({
-      type: 'sqlite',
-      database: 'corruptornot',
-      synchronize: true,
-      entities: [
-        Politician
-      ],
-    });
+      connection = await createConnection({
+        type: 'mysql',
+        database: 'corruptornot',
+        username: "root",
+        password: "",
+        synchronize: true,
+        entities: [
+          Politician,
+          User,
+          UserVotes,
+          Admin
+        ],
+      });
   }
-  return connection.getRepository(Politician);
+  return connection.getRepository(entity);
 }
