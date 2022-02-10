@@ -5,8 +5,8 @@
 export const environment = {
   production: true,
   serverBaseURL : 'http://164.92.219.27/api',
-  apiKey : 'qG4bROXcHy',
-  apiSecret : '90wORSp91QJfThiKM8hQrDUnLTFg7dsd',
+  apiKey : '',
+  apiSecret : '',
   corruptLabel: 'Corrupt',
   notCorruptLabel: 'Not Corrupt',
   afterVoteMessage: function(decision:string){return `You voted " ${decision} Corrupt, Please enter your email address to see what 
