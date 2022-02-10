@@ -9,7 +9,7 @@ import * as basicAuth from 'express-basic-auth'
 
 
 const options = {
-    users: { 'qG4bROXcHy': '90wORSp91QJfThiKM8hQrDUnLTFg7dsd' }
+    users: { '': '' }
 }
 const app = express()
   .use(cors())
